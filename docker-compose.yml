@@ -58,8 +58,7 @@ services:
       - ELECTION_PARTICIPANTS=10:lock-coordinator,6:publisher-2,5:publisher-1
     restart: on-failure
 
-  # --- Servicio para el Publicador (Sensor 1) ---
-  # --- Sensor 1 ---
+    # --- Sensor 1 ---
 publisher-1:
   build: .
   container_name: publisher-1
