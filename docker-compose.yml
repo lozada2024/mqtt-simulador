@@ -57,84 +57,89 @@ services:
       - PROCESS_PRIORITY=10 # El ID más alto, es el líder
       - ELECTION_PARTICIPANTS=10:lock-coordinator,6:publisher-2,5:publisher-1
     restart: on-failure
-    # --- Sensor 1 ---
+     # --- Servicio para el Publicador (Sensor 1) ---
   publisher-1:
     build: .
     container_name: publisher-1
     depends_on:
       - mqtt-broker
-      - time-server
+      - time-server # Depende del servidor de tiempo
     command: "node publisher/publisher.js"
     environment:
-      - DEVICE_ID=sensor-1
-      - PROCESS_ID=1
-      - PROCESS_PRIORITY=10
+      - DEVICE_ID=sensor-001
       - CLOCK_DRIFT_RATE=500
-      - ELECTION_PARTICIPANTS=sensor-1:10,sensor-2:20,sensor-3:30,sensor-4:40,sensor-5:50
+      - PROCESS_ID=0
+      # --- NUEVO: Configuración de Elección ---
+      - PROCESS_PRIORITY=10
+      - ELECTION_PARTICIPANTS=sensor-001:10,sensor-002:20,sensor-003:30,sensor-004:40,sensor-005:50
     restart: on-failure
 
-  # --- Sensor 2 ---
+  # --- Servicio para el Publicador (Sensor 2) ---
   publisher-2:
     build: .
     container_name: publisher-2
     depends_on:
       - mqtt-broker
-      - time-server
+      - time-server # Depende del servidor de tiempo
     command: "node publisher/publisher.js"
     environment:
-      - DEVICE_ID=sensor-2
-      - PROCESS_ID=2
+      - DEVICE_ID=sensor-002
+      - CLOCK_DRIFT_RATE=-500
+      - PROCESS_ID=1
+      # --- NUEVO: Configuración de Elección ---
       - PROCESS_PRIORITY=20
-      - CLOCK_DRIFT_RATE=500
-      - ELECTION_PARTICIPANTS=sensor-1:10,sensor-2:20,sensor-3:30,sensor-4:40,sensor-5:50
+      - ELECTION_PARTICIPANTS=sensor-001:10,sensor-002:20,sensor-003:30,sensor-004:40,sensor-005:50
     restart: on-failure
 
-  # --- Sensor 3 ---
+  # --- Servicio para el Publicador (Sensor 3) ---
   publisher-3:
     build: .
     container_name: publisher-3
     depends_on:
       - mqtt-broker
-      - time-server
+      - time-server # Depende del servidor de tiempo
     command: "node publisher/publisher.js"
     environment:
-      - DEVICE_ID=sensor-3
-      - PROCESS_ID=3
-      - PROCESS_PRIORITY=30
+      - DEVICE_ID=sensor-003
       - CLOCK_DRIFT_RATE=500
-      - ELECTION_PARTICIPANTS=sensor-1:10,sensor-2:20,sensor-3:30,sensor-4:40,sensor-5:50
+      - PROCESS_ID=2
+      # --- NUEVO: Configuración de Elección ---
+      - PROCESS_PRIORITY=30
+      - ELECTION_PARTICIPANTS=sensor-001:10,sensor-002:20,sensor-003:30,sensor-004:40,sensor-005:50
     restart: on-failure
 
-  # --- Sensor 4 ---
+  # --- Servicio para el Publicador (Sensor 4) ---
   publisher-4:
     build: .
     container_name: publisher-4
     depends_on:
       - mqtt-broker
-      - time-server
+      - time-server # Depende del servidor de tiempo
     command: "node publisher/publisher.js"
     environment:
-      - DEVICE_ID=sensor-4
-      - PROCESS_ID=4
+      - DEVICE_ID=sensor-004
+      - CLOCK_DRIFT_RATE=-500
+      - PROCESS_ID=3
+      # --- NUEVO: Configuración de Elección ---
       - PROCESS_PRIORITY=40
-      - CLOCK_DRIFT_RATE=500
-      - ELECTION_PARTICIPANTS=sensor-1:10,sensor-2:20,sensor-3:30,sensor-4:40,sensor-5:50
+      - ELECTION_PARTICIPANTS=sensor-001:10,sensor-002:20,sensor-003:30,sensor-004:40,sensor-005:50
     restart: on-failure
 
-  # --- Sensor 5 ---
+  # --- Servicio para el Publicador (Sensor 5) ---
   publisher-5:
     build: .
     container_name: publisher-5
     depends_on:
       - mqtt-broker
-      - time-server
+      - time-server # Depende del servidor de tiempo
     command: "node publisher/publisher.js"
     environment:
-      - DEVICE_ID=sensor-5
-      - PROCESS_ID=5
-      - PROCESS_PRIORITY=50
+      - DEVICE_ID=sensor-005
       - CLOCK_DRIFT_RATE=500
-      - ELECTION_PARTICIPANTS=sensor-1:10,sensor-2:20,sensor-3:30,sensor-4:40,sensor-5:50
+      - PROCESS_ID=4
+      # --- NUEVO: Configuración de Elección ---
+      - PROCESS_PRIORITY=50
+      - ELECTION_PARTICIPANTS=sensor-001:10,sensor-002:20,sensor-003:30,sensor-004:40,sensor-005:50
     restart: on-failure
 
 
