@@ -5,3 +5,9 @@ node_modules/
 .DS_Store
 Thumbs.db
 desktop.ini
+# Ignorar logs generados por Mosquitto
+mosquitto/log/
+*.log
+
+# Ignorar archivos temporales del sistema
+*.tmp
